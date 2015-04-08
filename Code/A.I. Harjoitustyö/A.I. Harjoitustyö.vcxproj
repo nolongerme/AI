@@ -66,6 +66,7 @@
   <ItemGroup>
     <ClInclude Include="Armor.h" />
     <ClInclude Include="BodyPart.h" />
+    <ClInclude Include="Calculator.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="FightStyle.h" />
     <ClInclude Include="Personality.h" />
@@ -74,6 +75,7 @@
   <ItemGroup>
     <ClCompile Include="Armor.cpp" />
     <ClCompile Include="BodyPart.cpp" />
+    <ClCompile Include="Calculator.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="FightStyle.cpp" />
     <ClCompile Include="Personality.cpp" />
