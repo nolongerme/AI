@@ -13,7 +13,7 @@ class BodyPart
 {
 public:
 	BodyPart(BODY_PART_SIZE bodyPartSize);
-	BodyPart();
+	BodyPart(){}; //jumalauta
 	~BodyPart();
 
 	Armor* armor;

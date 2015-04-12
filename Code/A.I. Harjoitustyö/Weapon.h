@@ -3,7 +3,7 @@
 
 using namespace std;
 
-enum WEAPON_TYPE { SPEAR, SWORD, CLUB, AXE };
+enum WEAPON_TYPE { SPEAR, SWORD, CLUB};
 
 
 

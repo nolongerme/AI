@@ -7,12 +7,35 @@ Calculator::Calculator()
 
 float Calculator::probability(BodyPart hitPart, float dexterity)
 {
-	return hitPart.chanceToHit*dexterity / 10;
+	float chance = hitPart.chanceToHit;
+	chance *= dexterity*0.1f;
+	return chance;
 }
 
 float Calculator::damage(Armor armor, Weapon weapon, float strength)
 {
-	return typeEfficiency(armor.armorType, weapon.weaponType) * damageValue(armor.value, weapon.damage, strength);
+		
+		float efficiency = typeEfficiency(armor.armorType, weapon.weaponType);
+		float dmg = damageValue(armor.value, weapon.damage, strength);
+
+		float combined= efficiency*dmg;
+		return combined;
+
+}
+
+HitSummary Calculator::hit(Character attacker, Character target, BodyPart part)
+{
+	HitSummary summary;
+	summary.damageDone = 0;
+	summary.hitLanded = false;
+	float probly = probability(part,attacker.dexterity);
+		if(std::rand()%100>  probly)
+			{
+				summary.hitLanded = true;
+				summary.damageDone = damage(*part.armor,*attacker.weapon,attacker.strength);
+			}
+
+			return summary;
 }
 
 float Calculator::damageValue(float armorValue, float weaponDamage, float strength)
@@ -20,7 +43,7 @@ float Calculator::damageValue(float armorValue, float weaponDamage, float streng
 	return weaponDamage * strength * 1/armorValue * 0.1f;
 }
 
-float Calculator::typeEfficiency(ARMOR_TYPE armorType, WEAPON_TYPE swordType)
+float Calculator::typeEfficiency(ARMOR_TYPE armorType, WEAPON_TYPE weaponType)
 {
 	ArmorEfficiency eff;
 
@@ -43,7 +66,7 @@ float Calculator::typeEfficiency(ARMOR_TYPE armorType, WEAPON_TYPE swordType)
 		break;
 	}
 
-	switch (swordType)
+	switch (weaponType)
 	{
 	case SWORD:
 		return eff.againstSword;

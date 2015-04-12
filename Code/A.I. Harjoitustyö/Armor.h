@@ -9,6 +9,7 @@ class Armor
 {
 public:
 	Armor(ARMOR_TYPE type, float v);
+	Armor();
 	~Armor();
 
 	float value;

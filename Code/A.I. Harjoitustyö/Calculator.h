@@ -2,6 +2,7 @@
 #include "BodyPart.h"
 #include "Armor.h"
 #include "Weapon.h"
+#include "Character.h"
 #include <math.h>
 
 struct ArmorEfficiency
@@ -11,6 +12,11 @@ struct ArmorEfficiency
 	float againstClub;
 };
 
+struct HitSummary
+{
+	bool hitLanded;
+	float damageDone;
+};
 
 static class Calculator
 {
@@ -18,13 +24,14 @@ public:
 	Calculator();
 	~Calculator();
 
-	float probability(BodyPart hitPart, float dexterity);
-	float damage(Armor armor, Weapon weapon, float strength);
+	static float probability(BodyPart hitPart, float dexterity);
+	static float damage(Armor armor, Weapon weapon, float strength);
+	static HitSummary hit(Character attacker, Character target, BodyPart part);
 
 private:
-	float typeEfficiency(ARMOR_TYPE armorType, WEAPON_TYPE weaponType);
-	float damageValue(float armorValue, float weaponDamage, float strength);
-	float armorEfficiency(ARMOR_TYPE armorType);
+	static float typeEfficiency(ARMOR_TYPE armorType, WEAPON_TYPE weaponType);
+	static float damageValue(float armorValue, float weaponDamage, float strength);
+	static float armorEfficiency(ARMOR_TYPE armorType);
 };
 
 
