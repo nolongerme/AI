@@ -34,19 +34,17 @@ int main()
 	/*float damage = Calculator::damage(*armor,weapon,mauno.strength);
 	float probability = Calculator::probability(*mauno.head,mauno.dexterity);*/
 
-	//"Piirtäjään" lisätään nää piirrettävät hahmot
+	//renderiin lisätään nää piirrettävät hahmot
 	Render renderer;
 	renderer.addChar(mauno, sf::Vector2f(200, 200));
 	renderer.addChar(hemmo, sf::Vector2f(600, 200));
 
-
+	system("pause");
 
 	HitSummary sum;
 
 	while(mauno.health > 0)
-	{
-		
-		
+	{	
 		sum = Calculator::hit(mauno,mauno,*mauno.head);
 		
 		if(!sum.hitLanded)
@@ -55,11 +53,10 @@ int main()
 			std::cout << "Mauno succesfully hits his head for " << sum.damageDone << std::endl;
 
 		//Piirto
-		renderer.updateCharColor(mauno);
+		renderer.updateCharColor(mauno); //Joka hahmolle oma updateCharColor
 		renderer.update();
 		
 		Sleep(1000);
-
 	}
 
 	system("pause");

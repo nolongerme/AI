@@ -3,7 +3,7 @@
 
 Render::Render() : _window(sf::VideoMode(800, 600), "AI window")
 {
-	
+	_window.setPosition(sf::Vector2i(1000, 200));
 }
 
 
@@ -48,18 +48,21 @@ void Render::draw(RenderCharacter renderChar)
 
 void Render::updateCharColor(Character& character)
 {
-	//TODO: ruumiin osan hela ei sais menn‰ alle nollan asd 
 
 	std::map<Character*, RenderCharacter*>::iterator it;
-	for (it = characters.begin(); it != characters.end(); it++)
-	{
-		it->second->body.setColor(sf::Color(character.torso->health * 10, 0, 0, 255));
-		it->second->head.setColor(sf::Color(255, character.head->health * 51, character.head->health * 51, 255));
-		it->second->armR.setColor(sf::Color(character.rightArm->health * 10, 0, 0, 255));
-		it->second->armL.setColor(sf::Color(character.leftArm->health * 10, 0, 0, 255));
-		it->second->legR.setColor(sf::Color(character.rightLeg->health * 10, 0, 0, 255));
-		it->second->legL.setColor(sf::Color(character.rightLeg->health * 10, 0, 0, 255));
-	}
+	it = characters.find(&character);
+
+	int r = 255;
+	int g = 255;
+	int b = 255;
+	int a = 255;
+
+	it->second->body.setColor(sf::Color(r, g * character.torso->health,		b * character.torso->health,	a));
+	it->second->head.setColor(sf::Color(r, g * character.head->health,		b * character.head->health,		a));
+	it->second->armR.setColor(sf::Color(r, g * character.rightArm->health,	b * character.rightArm->health, a));
+	it->second->armL.setColor(sf::Color(r, g * character.leftArm->health,	b * character.leftArm->health,	a));
+	it->second->legR.setColor(sf::Color(r, g * character.rightLeg->health,	b * character.rightLeg->health, a));
+	it->second->legL.setColor(sf::Color(r, g * character.leftLeg->health,	b * character.leftLeg->health,	a));
 }
 
 
@@ -68,7 +71,7 @@ void Render::addChar(Character& character, sf::Vector2f position)
 	RenderCharacter* rendCharacter = new RenderCharacter;
 
 	//Lataa tekstuuri
-	rendCharacter->charTexture.loadFromFile("../../assets/texture.png");
+	rendCharacter->charTexture.loadFromFile("../../assets/character.png");
 
 	//Tekstuurit
 	rendCharacter->armR.setTexture(rendCharacter->charTexture);
@@ -80,26 +83,29 @@ void Render::addChar(Character& character, sf::Vector2f position)
 
 
 	//Tekstuuri rectit spriteille
-	rendCharacter->armR.setTextureRect(sf::IntRect(0, 0, 32, 64));
-	rendCharacter->armL.setTextureRect(sf::IntRect(0, 0, 32, 64)); // Sama tekstuuri kun armR
-	rendCharacter->legR.setTextureRect(sf::IntRect(0, 0, 32, 64));
-	rendCharacter->legL.setTextureRect(sf::IntRect(0, 0, 32, 64)); // Sama tekstuuri kun legR
+	int spriteWidth = 32;
 
-	rendCharacter->body.setTextureRect(sf::IntRect(0, 0, 32, 64));
-	rendCharacter->head.setTextureRect(sf::IntRect(0, 0, 32, 32));
+	rendCharacter->head.setTextureRect(sf::IntRect(0, 0, 32, 32));				
+	rendCharacter->armR.setTextureRect(sf::IntRect(spriteWidth, 0, 32, 64));	
+	rendCharacter->body.setTextureRect(sf::IntRect(spriteWidth * 2, 0, 32, 64));
+	rendCharacter->armL.setTextureRect(sf::IntRect(spriteWidth * 3, 0, 32, 64));
+	rendCharacter->legL.setTextureRect(sf::IntRect(spriteWidth * 4, 0, 32, 64)); 
+	rendCharacter->legR.setTextureRect(sf::IntRect(spriteWidth * 5, 0, 32, 64));
+
 
 	//Hemmon paikka. Ruumiin osille paikat bodyn suhteen
-	//NƒMƒ SƒƒD÷T PITƒƒ VIELƒ SƒƒDELLƒ! (kova koodi jee) 
 	rendCharacter->body.setPosition(position);
-	rendCharacter->head.setPosition(position.x, position.y - 50);
-
+	rendCharacter->head.setPosition(position.x, position.y - rendCharacter->head.getGlobalBounds().height);
 	//K‰det
-	rendCharacter->armR.setPosition(position.x - 70, position.y);
-	rendCharacter->armL.setPosition(position.x + 70, position.y);
-
+	rendCharacter->armR.setPosition(position.x - rendCharacter->body.getGlobalBounds().width, position.y);
+	rendCharacter->armL.setPosition(position.x + rendCharacter->armL.getGlobalBounds().width, position.y);
 	//Jalat
-	rendCharacter->legR.setPosition(position.x - 70, position.y + 70);
-	rendCharacter->legL.setPosition(position.x + 70, position.y + 70);
+	rendCharacter->legR.setPosition(position.x + rendCharacter->body.getGlobalBounds().width * 0.5, 
+		position.y + rendCharacter->body.getGlobalBounds().height);
 
+	rendCharacter->legL.setPosition(position.x - rendCharacter->body.getGlobalBounds().width * 0.5, 
+		position.y + rendCharacter->body.getGlobalBounds().height);
+
+	//Lis‰‰ hemmot mappiin
 	characters.insert(std::make_pair(&character, rendCharacter));
 }
