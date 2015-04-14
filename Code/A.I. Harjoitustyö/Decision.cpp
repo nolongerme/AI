@@ -10,56 +10,60 @@ Decision::~Decision()
 {
 }
 
-
-float Decision::envittutiia(BodyPart bodypart, Character character, Character attacker)
+//kertoo DMGn ja osumatarkkuuden kesken‰‰n. N‰in saadaan keskim‰‰r‰inen dmg/lyˆntivuoro
+float Decision::averageDmgDealt(BodyPart bodypart, Character character, Character attacker)
 {
 	float chance = Calculator::probability(bodypart, character.dexterity);
 	float  combined = Calculator::damage(*bodypart.armor, *attacker.weapon, attacker.strength);
 
-	float olenpenis = chance * combined;
-	return olenpenis;
+	float average = chance * combined;
+	return average;
 }
-
-BodyPart Decision::charDecision(BodyPart head, BodyPart rightarm, BodyPart leftarm, BodyPart leftleg, BodyPart rightleg, BodyPart vittutorso, Character character, Character attacker)
+//t‰m‰ on kuraa eik‰ k‰‰nny koska olen mestari. Tarkoituksena ottaa keskiarvot, katsoa mik‰ niist‰ tekee keskim‰‰r‰isesti eniten DMGt‰ per vuoro ja palauttaa raaja joka toteuttaa t‰m‰n.
+BodyPart Decision::charDecision(BodyPart head, BodyPart rightarm, BodyPart leftarm, BodyPart leftleg, BodyPart rightleg, BodyPart torso, Character character, Character attacker)
 {
-	float _head = envittutiia(head, character, attacker);
-	float _righta = envittutiia(leftarm, character, attacker);
-	float _lefta = envittutiia(rightarm, character, attacker);
-	float _rightl = envittutiia(leftleg, character, attacker);
-	float _leftl = envittutiia(rightleg, character, attacker);
-	float _torso = envittutiia(vittutorso, character, attacker);
+	//keskim‰‰r‰set damaget
+	float _head = averageDmgDealt(head, character, attacker);
+	float _righta = averageDmgDealt(leftarm, character, attacker);
+	float _lefta = averageDmgDealt(rightarm, character, attacker);
+	float _rightl = averageDmgDealt(leftleg, character, attacker);
+	float _leftl = averageDmgDealt(rightleg, character, attacker);
+	float _torso = averageDmgDealt(torso, character, attacker);
 
-	vector<float> pilluperkele;
+	//vektori johon n‰m‰ otetaan talteen
+	vector<float> bodyPartVector;
 
-	_head = pilluperkele.push_back;
-	_righta = pilluperkele.push_back;
-	_lefta = pilluperkele.push_back;
-	_rightl = pilluperkele.push_back;
-	_leftl = pilluperkele.push_back;
-	_torso = pilluperkele.push_back;
+	bodyPartVector.push_back(_head);
+	bodyPartVector.push_back(_righta);
+	bodyPartVector.push_back(_lefta);
+	bodyPartVector.push_back(_rightl);
+	bodyPartVector.push_back(_leftl);
+	bodyPartVector.push_back(_torso);
 
-	for (int i = 0; i < pilluperkele.size; i++)
+	//Asettaa suurimman arvon vectorin ensimm‰iseksi(ehk‰)
+	for (int i = 0; i < bodyPartVector.size; i++)
 	{
-		for (int j = i + 1; j < pilluperkele.size; j++)
+		for (int j = i + 1; j < bodyPartVector.size; j++)
 		{
-			if (pilluperkele[i] < pilluperkele[i])
+			if (bodyPartVector[i] < bodyPartVector[i])
 			{
-				float temp = pilluperkele[j];
-				pilluperkele[j] = pilluperkele[i];
-				pilluperkele[i] = temp;
+				float temp = bodyPartVector[j];
+				bodyPartVector[j] = bodyPartVector[i];
+				bodyPartVector[i] = temp;
 			}
 		}
 	}
-	if (pilluperkele[0] == _head)
+	//ottaa muistipaikka nollasta arvon ja palauttaa pienimm‰n raajan, mutta eih‰n ne muistipaikat ihan n‰in tainnu menn‰....
+	if (bodyPartVector[0] == _head)
 		return head;
-	if (pilluperkele[0] == _lefta)
+	if (bodyPartVector[0] == _lefta)
 		return leftarm;
-	if (pilluperkele[0] == _righta)
+	if (bodyPartVector[0] == _righta)
 		return rightarm;
-	if (pilluperkele[0] == _leftl)
+	if (bodyPartVector[0] == _leftl)
 		return leftleg;
-	if (pilluperkele[0] == _rightl)
+	if (bodyPartVector[0] == _rightl)
 		return rightleg;
-	if (pilluperkele[0] == _torso)
-		return vittutorso;
+	if (bodyPartVector[0] == _torso)
+		return torso;
 }
