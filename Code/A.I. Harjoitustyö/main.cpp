@@ -3,11 +3,10 @@
 #include "Weapon.h"
 #include "Character.h"
 #include <random>
-#include <time.h>
+#include <Windows.h>
 
 int main()
 {
-	std::srand(time(NULL));
 
 	Character mauno;
 	mauno.dexterity = 5;
@@ -42,8 +41,9 @@ int main()
 			std::cout << "Mauno misses his head" << std::endl;
 		else
 			std::cout << "Mauno succesfully hits his head for " << sum.damageDone << std::endl;
+		Sleep(1000);
+		
 	}
-
 
 	system("pause");
 }
