@@ -17,6 +17,8 @@ BodyPart::BodyPart(BODY_PART_SIZE bodyPartSize)
 		chanceToHit = 0.95;
 		break;
 	}
+
+	health = 5;
 }
 
 

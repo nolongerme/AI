@@ -13,10 +13,11 @@ class BodyPart
 {
 public:
 	BodyPart(BODY_PART_SIZE bodyPartSize);
-	BodyPart(){}; //jumalauta //mikä vitun jumalauta
+	BodyPart(){};
 	~BodyPart();
 
 	Armor* armor;
 	float chanceToHit;
+	float health;
 };
 

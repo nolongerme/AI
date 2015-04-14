@@ -41,6 +41,7 @@ HitSummary Calculator::hit(Character& attacker, Character& target, BodyPart& par
 
 		// T‰‰ll‰ kohteen healthin erotus? Vai tapahtuuko jo jossain muualla?
 		target.health = target.health - summary.damageDone;
+		part.health = part.health - summary.damageDone;
 	}
 
 	return summary;
