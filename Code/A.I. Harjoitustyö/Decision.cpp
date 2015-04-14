@@ -20,15 +20,15 @@ float Decision::averageDmgDealt(BodyPart bodypart, Character character, Characte
 	return average;
 }
 //t‰m‰ on kuraa eik‰ k‰‰nny koska olen mestari. Tarkoituksena ottaa keskiarvot, katsoa mik‰ niist‰ tekee keskim‰‰r‰isesti eniten DMGt‰ per vuoro ja palauttaa raaja joka toteuttaa t‰m‰n.
-BodyPart Decision::charDecision(BodyPart head, BodyPart rightarm, BodyPart leftarm, BodyPart leftleg, BodyPart rightleg, BodyPart torso, Character character, Character attacker)
+BodyPart Decision::charDecision(Character character, Character attacker)
 {
 	//keskim‰‰r‰set damaget
-	float _head = averageDmgDealt(head, character, attacker);
-	float _righta = averageDmgDealt(leftarm, character, attacker);
-	float _lefta = averageDmgDealt(rightarm, character, attacker);
-	float _rightl = averageDmgDealt(leftleg, character, attacker);
-	float _leftl = averageDmgDealt(rightleg, character, attacker);
-	float _torso = averageDmgDealt(torso, character, attacker);
+	float _head = averageDmgDealt(*character.head, character, attacker);
+	float _righta = averageDmgDealt(*character.leftArm, character, attacker);
+	float _lefta = averageDmgDealt(*character.rightArm, character, attacker);
+	float _rightl = averageDmgDealt(*character.leftLeg, character, attacker);
+	float _leftl = averageDmgDealt(*character.rightLeg, character, attacker);
+	float _torso = averageDmgDealt(*character.torso, character, attacker);
 
 	//vektori johon n‰m‰ otetaan talteen
 	vector<float> bodyPartVector;
@@ -57,15 +57,15 @@ BodyPart Decision::charDecision(BodyPart head, BodyPart rightarm, BodyPart lefta
 	}
 	//ottaa muistipaikka nollasta arvon ja palauttaa pienimm‰n raajan, mutta eih‰n ne muistipaikat ihan n‰in tainnu menn‰....
 	if (bodyPartVector[0] == _head)
-		return head;
+		return *character.head;
 	if (bodyPartVector[0] == _lefta)
-		return leftarm;
+		return *character.leftArm;
 	if (bodyPartVector[0] == _righta)
-		return rightarm;
+		return *character.rightArm;
 	if (bodyPartVector[0] == _leftl)
-		return leftleg;
+		return *character.leftLeg;
 	if (bodyPartVector[0] == _rightl)
-		return rightleg;
+		return *character.rightLeg;
 	if (bodyPartVector[0] == _torso)
-		return torso;
+		return *character.torso;
 }
