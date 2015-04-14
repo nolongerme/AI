@@ -13,7 +13,7 @@ class BodyPart
 {
 public:
 	BodyPart(BODY_PART_SIZE bodyPartSize);
-	BodyPart(){}; //jumalauta
+	BodyPart(){}; //jumalauta //mikä vitun jumalauta
 	~BodyPart();
 
 	Armor* armor;

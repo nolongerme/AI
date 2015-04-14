@@ -2,7 +2,6 @@
 
 #include "BodyPart.h"
 #include "Weapon.h"
-#include "Personality.h"
 #include "FightSkill.h"
 
 class Character

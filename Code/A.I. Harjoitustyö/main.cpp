@@ -10,7 +10,7 @@ int main()
 	std::srand(time(NULL));
 
 	Character mauno;
-	mauno.dexterity = 3;
+	mauno.dexterity = 5;
 	mauno.fightSkill = new FightSkill(PERSONALITY::HONORABLE,FIGHT_STYLE::AGRESSIVE_STYLE);
 	mauno.strength = 10;
 	mauno.health = 10;
@@ -41,7 +41,7 @@ int main()
 		if(!sum.hitLanded)
 			std::cout << "Mauno misses his head" << std::endl;
 		else
-			std::cout << "Mauno succesfully hits his head for" << sum.damageDone << std::endl;
+			std::cout << "Mauno succesfully hits his head for " << sum.damageDone << std::endl;
 	}
 
 

@@ -5,14 +5,18 @@ Calculator::Calculator()
 {
 }
 
-float Calculator::probability(BodyPart hitPart, float dexterity)
+Calculator::~Calculator()
+{
+}
+
+float Calculator::probability(BodyPart& hitPart, float dexterity)
 {
 	float chance = hitPart.chanceToHit;
 	chance *= dexterity*0.1f;
 	return chance;
 }
 
-float Calculator::damage(Armor armor, Weapon weapon, float strength)
+float Calculator::damage(Armor& armor, Weapon& weapon, float strength)
 {
 		
 		float efficiency = typeEfficiency(armor.armorType, weapon.weaponType);
@@ -23,19 +27,23 @@ float Calculator::damage(Armor armor, Weapon weapon, float strength)
 
 }
 
-HitSummary Calculator::hit(Character attacker, Character target, BodyPart part)
+HitSummary Calculator::hit(Character& attacker, Character& target, BodyPart& part)
 {
 	HitSummary summary;
 	summary.damageDone = 0;
 	summary.hitLanded = false;
-	float probly = probability(part,attacker.dexterity);
-		if(std::rand()%100>  probly)
-			{
-				summary.hitLanded = true;
-				summary.damageDone = damage(*part.armor,*attacker.weapon,attacker.strength);
-			}
+	float probly = probability(part, attacker.dexterity);
 
-			return summary;
+	if(randomNumber()*0.01 <  probly && probly > 0)
+	{
+		summary.hitLanded = true;
+		summary.damageDone = damage(*part.armor, *attacker.weapon, attacker.strength);
+
+		// Täällä kohteen healthin erotus? Vai tapahtuuko jo jossain muualla?
+		target.health = target.health - summary.damageDone;
+	}
+
+	return summary;
 }
 
 float Calculator::damageValue(float armorValue, float weaponDamage, float strength)
@@ -80,8 +88,16 @@ float Calculator::typeEfficiency(ARMOR_TYPE armorType, WEAPON_TYPE weaponType)
 	}
 }
 
-
-
-Calculator::~Calculator()
+int Calculator::randomNumber()
 {
+	// <random> headeristä tämmönen generaattori
+	default_random_engine randGen;
+	randGen.seed(time(NULL));
+
+	//Max ja min arvo random luvulle
+	uniform_int_distribution<int> distribution(0, 100);
+
+	int randomNumber =  distribution(randGen);
+
+	return randomNumber;
 }
