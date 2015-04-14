@@ -32,6 +32,8 @@ BodyPart Decision::charDecision(BodyPart head, BodyPart rightarm, BodyPart lefta
 
 	//vektori johon nämä otetaan talteen
 	vector<float> bodyPartVector;
+	vector<float>::iterator it1;
+	vector<float>::iterator it2;
 
 	bodyPartVector.push_back(_head);
 	bodyPartVector.push_back(_righta);
@@ -41,15 +43,15 @@ BodyPart Decision::charDecision(BodyPart head, BodyPart rightarm, BodyPart lefta
 	bodyPartVector.push_back(_torso);
 
 	//Asettaa suurimman arvon vectorin ensimmäiseksi(ehkä)
-	for (int i = 0; i < bodyPartVector.size; i++)
+	for (it1 = bodyPartVector.begin(); it1 != bodyPartVector.end(); it1++)
 	{
-		for (int j = i + 1; j < bodyPartVector.size; j++)
+		for (it2 = bodyPartVector.begin() + 1; it2 != bodyPartVector.end(); it2++)
 		{
-			if (bodyPartVector[i] < bodyPartVector[i])
+			if (*it1 < *it2)
 			{
-				float temp = bodyPartVector[j];
-				bodyPartVector[j] = bodyPartVector[i];
-				bodyPartVector[i] = temp;
+				float temp = *it2;
+				*it2 = *it1;
+				*it1 = temp;
 			}
 		}
 	}
