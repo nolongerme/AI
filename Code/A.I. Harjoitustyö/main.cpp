@@ -5,6 +5,7 @@
 #include "Render.h"
 #include <random>
 #include <Windows.h>
+#include "Decision.h"
 
 int main()
 {
@@ -45,6 +46,9 @@ int main()
 
 	while(mauno.health > 0)
 	{	
+		//Decisionin testi. 100e sille joka arvas oikein että toimiiko se
+		//BodyPart test = Decision::charDecision(mauno, mauno, ADAPTIVE_STYLE);
+		//sum = Calculator::hit(mauno, mauno,test);
 		sum = Calculator::hit(mauno,mauno,*mauno.head);
 		
 		if(!sum.hitLanded)

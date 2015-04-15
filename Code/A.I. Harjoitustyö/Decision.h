@@ -11,7 +11,7 @@ public:
 	Decision();
 	~Decision();
 
-	float averageDmgDealt(BodyPart bodypart, Character chracter, Character attacker);
-	BodyPart charDecision(Character character, Character attacker);
+	static float averageDmgDealt(BodyPart bodypart, Character chracter, Character attacker);
+	static BodyPart charDecision(Character character, Character attacker, FIGHT_STYLE style);
 };
 
