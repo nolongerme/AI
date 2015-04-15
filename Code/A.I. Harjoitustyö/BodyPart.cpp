@@ -24,5 +24,6 @@ BodyPart::BodyPart(BODY_PART_SIZE bodyPartSize)
 
 BodyPart::~BodyPart()
 {
-	delete armor;
+	//if (armor != nullptr)
+		//delete armor;
 }

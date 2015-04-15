@@ -9,5 +9,5 @@ Character::Character()
 
 Character::~Character()
 {
-	delete head, torso, leftArm, rightArm, leftLeg, rightLeg, weapon;
+	//delete head, torso, leftArm, rightArm, leftLeg, rightLeg, weapon;
 }

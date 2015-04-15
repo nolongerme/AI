@@ -11,7 +11,10 @@ public:
 	Decision();
 	~Decision();
 
-	static float averageDmgDealt(BodyPart bodypart, Character chracter, Character attacker);
-	static BodyPart charDecision(Character character, Character attacker, FIGHT_STYLE style);
+	float averageDmgDealt(BodyPart bodypart, Character target, Character attacker);
+	BodyPart* charDecision(Character target, Character attacker, FIGHT_STYLE style);
+
+private:
+	std::vector<BodyPart*> _bodyParts;
 };
 

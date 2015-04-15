@@ -19,8 +19,8 @@ float Calculator::probability(BodyPart& hitPart, float dexterity)
 float Calculator::damage(Armor& armor, Weapon& weapon, float strength)
 {
 		
-		float efficiency = typeEfficiency(armor.armorType, weapon.weaponType);
-		float dmg = damageValue(armor.value, weapon.damage, strength);
+	float efficiency = typeEfficiency(armor.armorType, weapon.weaponType);
+	float dmg = damageValue(armor.value, weapon.damage, strength);
 
 		float combined= efficiency*dmg;
 		return combined;
