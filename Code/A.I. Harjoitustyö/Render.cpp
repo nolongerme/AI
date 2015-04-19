@@ -12,6 +12,7 @@ Render::~Render()
 }
 
 
+//Pirtää kaikki hahmot
 void Render::update()
 {
 		sf::Event event;
@@ -28,6 +29,7 @@ void Render::update()
 		std::map<Character*, RenderCharacter*>::iterator it;
 		for (it = characters.begin(); it != characters.end(); it++)
 		{
+			updateCharColor(*it->first);
 			draw(*it->second);
 		}
 
@@ -35,6 +37,7 @@ void Render::update()
 }
 
 
+//Piirtää hahmon
 void Render::draw(RenderCharacter renderChar)
 {
 	_window.draw(renderChar.body);
@@ -46,6 +49,7 @@ void Render::draw(RenderCharacter renderChar)
 }
 
 
+//Päivittää hahmon osien värin niiden healthin mukaan
 void Render::updateCharColor(Character& character)
 {
 
@@ -65,7 +69,7 @@ void Render::updateCharColor(Character& character)
 	it->second->legL.setColor(sf::Color(r, g * character.leftLeg->health,	b * character.leftLeg->health,	a));
 }
 
-
+//Lisää uuden piirrettävän hahmon. Hakee tekstuurin ja asettaa spriteille oikeat tekstuurit
 void Render::addChar(Character& character, sf::Vector2f position)
 {
 	RenderCharacter* rendCharacter = new RenderCharacter;

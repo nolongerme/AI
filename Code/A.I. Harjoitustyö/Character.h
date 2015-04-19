@@ -10,9 +10,6 @@ public:
 	Character();
 	~Character();
 
-	/*
-	 *Char's attributes. Everything is public.
-	 */
 	float health;
 	float strength, dexterity;
 	BodyPart* head, *torso, *rightArm , *leftArm, *rightLeg, *leftLeg;

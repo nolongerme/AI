@@ -20,7 +20,7 @@ float Decision::averageDmgDealt(BodyPart bodypart, Character target, Character a
 	return average;
 }
 
-//Tarkoituksena ottaa keskiarvot, katsoa mik‰ niist‰ tekee keskim‰‰r‰isesti eniten DMGt‰ per vuoro ja palauttaa raaja joka toteuttaa t‰m‰n.
+//Tekee p‰‰tˆksen lyˆnnin kohteesta hahmon FIGHT_STYLEn mukaan
 BodyPart* Decision::charDecision(Character target, Character attacker, FIGHT_STYLE style)
 {
 	//Otetaan kaikki targetin BodyPartit vektoriin
@@ -39,6 +39,16 @@ BodyPart* Decision::charDecision(Character target, Character attacker, FIGHT_STY
 	switch (style)
 	{
 		case ADAPTIVE_STYLE:
+			for (it = _bodyParts.begin(); it != _bodyParts.end(); it++)
+			{
+				float avg = averageDmgDealt(*(*it),target ,attacker);
+				if (avg > highest && (*it)->health != 0)
+				{
+					highest = avg;
+					bodyPartToHit = *it;
+				}
+			}
+
 			break;
 
 		//Osumatarkkuuden mukaan		
@@ -47,7 +57,7 @@ BodyPart* Decision::charDecision(Character target, Character attacker, FIGHT_STY
 			for (it = _bodyParts.begin(); it != _bodyParts.end(); it++)
 			{
 				float prob = Calculator::probability(*(*it), attacker.dexterity);
-				if ( prob > highest)
+				if (prob > highest && (*it)->health != 0)
 				{
 					highest = prob;
 					bodyPartToHit = *it;
@@ -72,6 +82,9 @@ BodyPart* Decision::charDecision(Character target, Character attacker, FIGHT_STY
 		default:
 			break;
 	}
+
+	//Tyhjennet‰‰n vektori seuraavaa ajo kertaa varten
+	_bodyParts.clear();
 
 	return bodyPartToHit;
 }

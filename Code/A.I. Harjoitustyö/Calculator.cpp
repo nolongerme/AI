@@ -9,6 +9,8 @@ Calculator::~Calculator()
 {
 }
 
+
+//Laskee osumis mahdollisuuden
 float Calculator::probability(BodyPart& hitPart, float dexterity)
 {
 	float chance = hitPart.chanceToHit;
@@ -16,6 +18,8 @@ float Calculator::probability(BodyPart& hitPart, float dexterity)
 	return chance;
 }
 
+
+//Laskee tehdyn vahingon
 float Calculator::damage(Armor& armor, Weapon& weapon, float strength)
 {
 		
@@ -27,6 +31,8 @@ float Calculator::damage(Armor& armor, Weapon& weapon, float strength)
 
 }
 
+
+//Tarkistaa osuuko lyönti
 HitSummary Calculator::hit(Character& attacker, Character& target, BodyPart& part)
 {
 	HitSummary summary;
@@ -39,21 +45,25 @@ HitSummary Calculator::hit(Character& attacker, Character& target, BodyPart& par
 		summary.hitLanded = true;
 		summary.damageDone = damage(*part.armor, *attacker.weapon, attacker.strength);
 
-		// Täällä kohteen healthin erotus? Vai tapahtuuko jo jossain muualla?
+		//Päivittä hahmon healthin
 		target.health = target.health - summary.damageDone;
 		part.health = part.health - summary.damageDone;
-		if (part.health < 0)
+		if (part.health <= 0)
 			part.health = 0;
 	}
 
 	return summary;
 }
 
+
+//Laskee tehtävän vahingon suuruuden
 float Calculator::damageValue(float armorValue, float weaponDamage, float strength)
 {
 	return weaponDamage * strength * 1/armorValue * 0.1f;
 }
 
+
+//Eri aseiden ja haarniskoiden vaikutus kertoimet
 float Calculator::typeEfficiency(ARMOR_TYPE armorType, WEAPON_TYPE weaponType)
 {
 	ArmorEfficiency eff;

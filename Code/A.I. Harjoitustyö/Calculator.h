@@ -25,11 +25,6 @@ static class Calculator
 public:
 	Calculator();
 	~Calculator();
-
-	/*
-		Kun annetaan referenssin‰ nuo charachterit ja bodypartit ym. nii se ei mee turhaan sinne  destructoriin.
-		Ei kaadu en‰‰ siihen.
-	*/
 	
 	static float probability(BodyPart& hitPart, float dexterity);
 	static float damage(Armor& armor, Weapon& weapon, float strength);
